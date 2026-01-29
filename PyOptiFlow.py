@@ -315,8 +315,7 @@ def otimizacao(self):
         ).pack(fill="x", pady=4)
 
     return f
-
-    # ===============================
+# ===============================
     # LIMPEZA
     # ===============================
     def limpeza(self):
@@ -368,7 +367,7 @@ def otimizacao(self):
         return f
 
     # ===============================
-    # FUNÇÕES
+    # FUNÇÕES (ALINHADAS COM A CLASSE)
     # ===============================
     def limpar_ram(self):
         def t():
@@ -383,13 +382,17 @@ def otimizacao(self):
 
     def monitorar(self):
         while True:
-            self.cpu.configure(text=f"{psutil.cpu_percent()}%")
-            self.ram.configure(text=f"{psutil.virtual_memory().percent}%")
-            self.disk.configure(text=f"{psutil.disk_usage('/').percent}%")
+            try:
+                self.cpu.configure(text=f"{psutil.cpu_percent()}%")
+                self.ram.configure(text=f"{psutil.virtual_memory().percent}%")
+                self.disk.configure(text=f"{psutil.disk_usage('/').percent}%")
+            except:
+                pass
             time.sleep(1)
 
 # ===============================
-# START
+# START (FORA DA CLASSE - SEM ESPAÇOS NO INÍCIO)
 # ===============================
 if __name__ == "__main__":
-    PyOptiFlowApp().mainloop()
+    app = PyOptiFlowApp()
+    app.mainloop()
