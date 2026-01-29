@@ -1,0 +1,14 @@
+PyOptiFlow.ico
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+build/
+*.spec
+venv/
+.venv/
+env/
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

@@ -56,8 +56,12 @@ class PyOptiFlowApp(ctk.CTk):
         self.title("PyOptiFlow • Advanced System Optimizer")
         self.geometry("1280x780")
         self.resizable(False, False)
+        
+        try:
+            self.iconbitmap("PyOptiFlow.ico") # Certifique-se de que o nome seja igual ao seu arquivo
+        except:
+            pass # Se o ícone não for encontrado, ele ignora e abre com o ícone padrão
         self.attributes("-alpha", 0.95)
-
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
@@ -151,170 +155,70 @@ class PyOptiFlowApp(ctk.CTk):
         lbl.pack(pady=10)
         return lbl
 
-   # ===============================
-    # CONFIRMAÇÃO
     # ===============================
-def confirmar_otimizacao(self, titulo, descricao, comando):
-    msg = (
-        f"{titulo}\n\n"
-        f"O que isso faz:\n{descricao}\n\n"
-        "⚠️ Essa alteração afeta o sistema.\n"
-        "Deseja realmente aplicar?"
-    )
+    # CONFIRMAÇÃO (CORRIGIDO: AGORA DENTRO DA CLASSE)
+    # ===============================
+    def confirmar_otimizacao(self, titulo, descricao, comando):
+        msg = (
+            f"{titulo}\n\n"
+            f"O que isso faz:\n{descricao}\n\n"
+            f"⚠️ Essa alteração afeta o sistema.\n"
+            f"Deseja realmente aplicar?"
+        )
 
-    if messagebox.askyesno("Confirmação de Otimização", msg):
-        executar(comando)
-        messagebox.showinfo("PyOptiFlow", "Otimização aplicada com sucesso!")
+        if messagebox.askyesno("Confirmação de Otimização", msg):
+            executar(comando)
+            messagebox.showinfo("PyOptiFlow", "Otimização aplicada com sucesso!")
 
-# ===============================
-# OTIMIZAÇÃO — 25 OTIMIZAÇÕES REAIS (COM CONFIRMAÇÃO)
-# ===============================
-def otimizacao(self):
-    f = ctk.CTkScrollableFrame(self.container)
+    # ===============================
+    # OTIMIZAÇÃO — 25 OTIMIZAÇÕES (CORRIGIDO: AGORA DENTRO DA CLASSE)
+    # ===============================
+    def otimizacao(self):
+        f = ctk.CTkScrollableFrame(self.container)
 
-    ctk.CTkLabel(
-        f,
-        text="🚀 25 Otimizações Reais de Sistema",
-        font=("Segoe UI", 20, "bold")
-    ).pack(anchor="w", pady=10)
-
-    otim = [
-        (
-            "1 ⚡ Plano Alto Desempenho",
-            "Ativa o plano de energia de máximo desempenho, evitando economia de CPU.",
-            "powercfg /setactive SCHEME_MIN"
-        ),
-        (
-            "2 🎮 Game Mode ON",
-            "Ativa o Modo Jogo do Windows para priorizar jogos.",
-            "reg add HKCU\\Software\\Microsoft\\GameBar /v AllowAutoGameMode /t REG_DWORD /d 1 /f"
-        ),
-        (
-            "3 🚫 Xbox Game Bar OFF",
-            "Desativa a Xbox Game Bar para reduzir consumo em jogos.",
-            "reg add HKCU\\Software\\Microsoft\\GameBar /v ShowStartupPanel /t REG_DWORD /d 0 /f"
-        ),
-        (
-            "4 🪟 Animações OFF",
-            "Remove atrasos e animações da interface do Windows.",
-            "reg add HKCU\\Control Panel\\Desktop /v MenuShowDelay /t REG_SZ /d 0 /f"
-        ),
-        (
-            "5 🌐 TCP Low Latency",
-            "Reduz latência de rede, ideal para jogos online.",
-            "netsh int tcp set global autotuninglevel=disabled"
-        ),
-        (
-            "6 📈 System Responsiveness 0",
-            "Prioriza aplicações em tempo real (jogos).",
-            "reg add HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile /v SystemResponsiveness /t REG_DWORD /d 0 /f"
-        ),
-        (
-            "7 📡 Telemetria OFF",
-            "Desativa coleta de dados do Windows.",
-            "reg add HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection /v AllowTelemetry /t REG_DWORD /d 0 /f"
-        ),
-        (
-            "8 🧠 CPU 100%",
-            "Impede o Windows de limitar a CPU.",
-            "powercfg -setacvalueindex SCHEME_CURRENT SUB_PROCESSOR PROCTHROTTLEMAX 100"
-        ),
-        (
-            "9 🎯 GPU Priority Máxima",
-            "Aumenta prioridade da GPU para jogos.",
-            "reg add HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games /v GPU Priority /t REG_DWORD /d 8 /f"
-        ),
-        (
-            "10 📦 TCP RSS ON",
-            "Melhora desempenho de rede usando múltiplos núcleos.",
-            "netsh int tcp set global rss=enabled"
-        ),
-        (
-            "11 🧩 Desativar SysMain",
-            "Desativa serviço que pode causar stutter em PCs fracos.",
-            "sc stop SysMain & sc config SysMain start= disabled"
-        ),
-        (
-            "12 🪫 Desativar Hibernação",
-            "Libera espaço em disco e evita consumo extra.",
-            "powercfg -h off"
-        ),
-        (
-            "13 🔋 USB Power OFF",
-            "Impede economia de energia nas portas USB.",
-            "powercfg -setacvalueindex SCHEME_CURRENT SUB_USB USBSELECTIVE SUSPEND 0"
-        ),
-        (
-            "14 🔥 Explorer Alta Prioridade",
-            "Aumenta prioridade do explorer.exe.",
-            "wmic process where name='explorer.exe' CALL setpriority 128"
-        ),
-        (
-            "15 🧼 Limpar DNS",
-            "Limpa cache de DNS para conexões mais estáveis.",
-            "ipconfig /flushdns"
-        ),
-        (
-            "16 🌍 TCP ECN OFF",
-            "Desativa ECN para reduzir latência.",
-            "netsh int tcp set global ecncapability=disabled"
-        ),
-        (
-            "17 🧠 Prioridade Jogos",
-            "Prioriza processos de jogos no sistema.",
-            "reg add HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games /v Priority /t REG_DWORD /d 6 /f"
-        ),
-        (
-            "18 🚀 Mouse Responsivo",
-            "Remove aceleração e delays do mouse.",
-            "reg add HKCU\\Control Panel\\Mouse /v MouseThreshold1 /t REG_SZ /d 0 /f"
-        ),
-        (
-            "19 🧲 Teclado Rápido",
-            "Reduz atraso de repetição do teclado.",
-            "reg add HKCU\\Control Panel\\Keyboard /v KeyboardDelay /t REG_SZ /d 0 /f"
-        ),
-        (
-            "20 📉 Nagle OFF",
-            "Reduz latência em jogos online.",
-            "reg add HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces /v TcpAckFrequency /t REG_DWORD /d 1 /f"
-        ),
-        (
-            "21 🛑 OneDrive OFF",
-            "Finaliza o OneDrive para reduzir uso de recursos.",
-            "taskkill /f /im OneDrive.exe"
-        ),
-        (
-            "22 📡 Wi-Fi Power OFF",
-            "Desativa economia de energia do Wi-Fi.",
-            "powercfg -setacvalueindex SCHEME_CURRENT SUB_WIFI POWERSAVINGMODE 0"
-        ),
-        (
-            "23 🧱 Defender CPU Low",
-            "Limita uso de CPU do Windows Defender.",
-            "powershell Set-MpPreference -ScanAvgCPULoadFactor 5"
-        ),
-        (
-            "24 🔄 Prefetch ON",
-            "Melhora carregamento de apps e jogos.",
-            "reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management\\PrefetchParameters /v EnablePrefetcher /t REG_DWORD /d 3 /f"
-        ),
-        (
-            "25 🚀 Full Performance",
-            "Ativa todas as configurações de alto desempenho.",
-            "powercfg /setactive SCHEME_MIN"
-        ),
-    ]
-
-    for nome, desc, cmd in otim:
-        ctk.CTkButton(
+        ctk.CTkLabel(
             f,
-            text=nome,
-            height=42,
-            command=lambda n=nome, d=desc, c=cmd: self.confirmar_otimizacao(n, d, c)
-        ).pack(fill="x", pady=4)
+            text="🚀 25 Otimizações Reais de Sistema",
+            font=("Segoe UI", 20, "bold")
+        ).pack(anchor="w", pady=10)
 
-    return f
+        otim = [
+            ("1 ⚡ Plano Alto Desempenho", "Ativa o plano de energia de máximo desempenho, evitando economia de CPU.", "powercfg /setactive SCHEME_MIN"),
+            ("2 🎮 Game Mode ON", "Ativa o Modo Jogo do Windows para priorizar jogos.", "reg add HKCU\\Software\\Microsoft\\GameBar /v AllowAutoGameMode /t REG_DWORD /d 1 /f"),
+            ("3 🚫 Xbox Game Bar OFF", "Desativa a Xbox Game Bar para reduzir consumo em jogos.", "reg add HKCU\\Software\\Microsoft\\GameBar /v ShowStartupPanel /t REG_DWORD /d 0 /f"),
+            ("4 🪟 Animações OFF", "Remove atrasos e animações da interface do Windows.", "reg add HKCU\\Control Panel\\Desktop /v MenuShowDelay /t REG_SZ /d 0 /f"),
+            ("5 🌐 TCP Low Latency", "Reduz latência de rede, ideal para jogos online.", "netsh int tcp set global autotuninglevel=disabled"),
+            ("6 📈 System Responsiveness 0", "Prioriza aplicações em tempo real (jogos).", "reg add HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile /v SystemResponsiveness /t REG_DWORD /d 0 /f"),
+            ("7 📡 Telemetria OFF", "Desativa coleta de dados do Windows.", "reg add HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection /v AllowTelemetry /t REG_DWORD /d 0 /f"),
+            ("8 🧠 CPU 100%", "Impede o Windows de limitar a CPU.", "powercfg -setacvalueindex SCHEME_CURRENT SUB_PROCESSOR PROCTHROTTLEMAX 100"),
+            ("9 🎯 GPU Priority Máxima", "Aumenta prioridade da GPU para jogos.", "reg add HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games /v GPU Priority /t REG_DWORD /d 8 /f"),
+            ("10 📦 TCP RSS ON", "Melhora desempenho de rede usando múltiplos núcleos.", "netsh int tcp set global rss=enabled"),
+            ("11 🧩 Desativar SysMain", "Desativa serviço que pode causar stutter em PCs fracos.", "sc stop SysMain & sc config SysMain start= disabled"),
+            ("12 🪫 Desativar Hibernação", "Libera espaço em disco e evita consumo extra.", "powercfg -h off"),
+            ("13 🔋 USB Power OFF", "Impede economia de energia nas portas USB.", "powercfg -setacvalueindex SCHEME_CURRENT SUB_USB USBSELECTIVE SUSPEND 0"),
+            ("14 🔥 Explorer Alta Prioridade", "Aumenta prioridade do explorer.exe.", "wmic process where name='explorer.exe' CALL setpriority 128"),
+            ("15 🧼 Limpar DNS", "Limpa cache de DNS para conexões mais estáveis.", "ipconfig /flushdns"),
+            ("16 🌍 TCP ECN OFF", "Desativa ECN para reduzir latência.", "netsh int tcp set global ecncapability=disabled"),
+            ("17 🧠 Prioridade Jogos", "Prioriza processos de jogos no sistema.", "reg add HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games /v Priority /t REG_DWORD /d 6 /f"),
+            ("18 🚀 Mouse Responsivo", "Remove aceleração e delays do mouse.", "reg add HKCU\\Control Panel\\Mouse /v MouseThreshold1 /t REG_SZ /d 0 /f"),
+            ("19 🧲 Teclado Rápido", "Reduz atraso de repetição do teclado.", "reg add HKCU\\Control Panel\\Keyboard /v KeyboardDelay /t REG_SZ /d 0 /f"),
+            ("20 📉 Nagle OFF", "Reduz latência em jogos online.", "reg add HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces /v TcpAckFrequency /t REG_DWORD /d 1 /f"),
+            ("21 🛑 OneDrive OFF", "Finaliza o OneDrive para reduzir uso de recursos.", "taskkill /f /im OneDrive.exe"),
+            ("22 📡 Wi-Fi Power OFF", "Desativa economia de energia do Wi-Fi.", "powercfg -setacvalueindex SCHEME_CURRENT SUB_WIFI POWERSAVINGMODE 0"),
+            ("23 🧱 Defender CPU Low", "Limita uso de CPU do Windows Defender.", "powershell Set-MpPreference -ScanAvgCPULoadFactor 5"),
+            ("24 🔄 Prefetch ON", "Melhora carregamento de apps e jogos.", "reg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management\\PrefetchParameters /v EnablePrefetcher /t REG_DWORD /d 3 /f"),
+            ("25 🚀 Full Performance", "Ativa todas as configurações de alto desempenho.", "powercfg /setactive SCHEME_MIN"),
+        ]
+
+        for nome, desc, cmd in otim:
+            ctk.CTkButton(
+                f,
+                text=nome,
+                height=42,
+                command=lambda n=nome, d=desc, c=cmd: self.confirmar_otimizacao(n, d, c)
+            ).pack(fill="x", pady=4)
+
+        return f
 # ===============================
     # LIMPEZA
     # ===============================
