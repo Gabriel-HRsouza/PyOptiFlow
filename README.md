@@ -14,7 +14,7 @@
 ## 🖼️ Interface do Projeto
 
 <div align="center">
-  <img src="/PyOptiFlow!.png" width="100%">
+  <img src="/PyOptiFlow¹.png" width="100%">
   <p><i>Otimizador Avançado de Sistema (PyOptiFlow) </i></p>
 </div>
 
@@ -32,9 +32,9 @@
 
 ## 📦 Como Baixar e Usar
 
-Para quem não é programador, você pode baixar a versão pronta (.exe) na aba **[Releases](https://github.com/Gabriel-HRsouza/PyOptiFlow/dist)**.
+Para quem não é programador, você pode baixar a versão pronta (.exe) na aba **[Releases]([text](https://github.com/Gabriel-HRsouza/PyOptiFlow/blob/main/dist/PyOptiFlow.exe))**.
 
 **Para desenvolvedores:**
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/Gabriel-HRsouza/PyOptiFlow.git](https://github.com/Gabriel-HRsouza/PyOptiFlow.git)
+   git clone https://github.com/Gabriel-HRsouza/PyOptiFlow.git
